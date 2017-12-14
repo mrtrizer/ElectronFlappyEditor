@@ -1,0 +1,22 @@
+{
+  "name": "FlappyEditor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/mrtrizer/FlappyEditor",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "mrtrizer",
+  "devDependencies": {
+    "electron": "~1.7.8",
+    "electron-rebuild": "^1.6.0"
+  }
+}
