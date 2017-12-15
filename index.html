@@ -5,7 +5,7 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <h1 id="hello">Hello World!</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
@@ -15,17 +15,16 @@
 
     <script>
         const ipcRenderer = require('electron').ipcRenderer;
-        const addon = require('./build/Release/addon');
+
+        setInterval(function() {
+            document.getElementById("hello").style.color = "#ff0000";
+        }, 1000);
 
         console.log(ipcRenderer);
 
-        ipcRenderer.on('paint', function(event, arg) {
-          console.log("Paint");
+        ipcRenderer.on('redraw', function(event, arg) {
 
-          console.log(addon.hello());
 
-          var windowImage = document.getElementById("windowImage");
-          windowImage.src = arg;
         });
         // You can also require other files to run in this process
         require('./renderer.js')

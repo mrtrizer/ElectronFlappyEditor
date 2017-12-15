@@ -1,0 +1,16 @@
+{
+    "name":"Renderer",
+    "modules": [
+        {
+            "path": "../../FlappyEngine/modules/Sdl2Manager"
+        }
+    ],
+    "cxx":{
+        "header_dirs": [
+            "./src"
+        ],
+        "src_dirs": [
+            "./src"
+        ]
+    }
+}

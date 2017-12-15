@@ -10,18 +10,11 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-let hiddenWindow;
 
 app.disableHardwareAcceleration()
 
 function createWindow () {
-    mainWindow = new BrowserWindow({width: 800, height: 600})
-    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file:',
-        slashes: true
-    }))
-    hiddenWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         show: false,
         frame: false,
         webPreferences: {
@@ -29,18 +22,22 @@ function createWindow () {
             transparent: true
         }
     })
-    hiddenWindow.loadURL('https://www.github.com')
-    hiddenWindow.webContents.setFrameRate(30)
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file:',
+        slashes: true
+    }))
+    mainWindow.webContents.setFrameRate(30)
 
     let ready = false
-    hiddenWindow.on('ready-to-show', () => (ready = true))
-    hiddenWindow.webContents.on('paint', (event, dirty, image) => {
+    mainWindow.on('ready-to-show', () => (ready = true))
+    mainWindow.webContents.on('paint', (event, dirty, image) => {
         if (!ready)
             return
-        console.log("paint");
-        if (mainWindow)
-            mainWindow.webContents.send('paint', image.toDataURL());
-      // handle frame
+
+        const addon = require('./build/Release/addon');
+        addon.print("yoooo");
+        mainWindow.webContents.send('redraw', image.toDataURL());
     })
 }
 
