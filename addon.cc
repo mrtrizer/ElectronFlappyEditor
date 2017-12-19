@@ -1,9 +1,10 @@
-// hello.cc
-#include <node.h>
 #include <memory>
 #include <dlfcn.h>
 #include <iostream>
-#include <unistd.h>
+
+#include <node.h>
+#include <common/api/atom_api_native_image.h>
+
 #include "test_project/src/Wrapper.h"
 #include "renderer/src/Renderer.h"
 
@@ -15,6 +16,8 @@ using v8::Local;
 using v8::Object;
 using v8::String;
 using v8::Value;
+using v8::External;
+using atom::api::NativeImage;
 
 std::unique_ptr<Wrapper> wrapper;
 
@@ -29,6 +32,17 @@ void print(const FunctionCallbackInfo<Value>& args) {
     Isolate* isolate = args.GetIsolate();
     std::cout << *v8::String::Utf8Value(args[0]) << globalTest << std::endl;
     globalTest = *v8::String::Utf8Value(args[0]);
+}
+
+void redrawUI(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = args.GetIsolate();
+    auto nativeImageExternal = args[0].As<External>();
+    auto nativeImage = static_cast<NativeImage*>(nativeImageExternal->Value());
+    const auto& image = nativeImage->image();
+    std::cout << "before Size()" << std::endl;
+    auto size = image.Size();
+    std::cout << "after Size()" << std::endl;
+    std::cout << "Size: w: " << size.width() << " h: " << size.height() << std::endl;
 }
 
 typedef Wrapper* (*InitProjectFunc)();
@@ -53,6 +67,7 @@ void init(Local<Object> exports) {
     std::cout << wrapper->sum(10,20) << std::endl;
 
     NODE_SET_METHOD(exports, "hello", hello);
+    NODE_SET_METHOD(exports, "redrawUI", redrawUI);
     NODE_SET_METHOD(exports, "print", print);
 }
 

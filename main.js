@@ -36,8 +36,8 @@ function createWindow () {
             return
 
         const addon = require('./build/Release/addon');
-        addon.print("yoooo");
-        mainWindow.webContents.send('redraw', image.toDataURL());
+
+        addon.redrawUI();
     })
 }
 

@@ -20,13 +20,6 @@
             document.getElementById("hello").style.color = "#ff0000";
         }, 1000);
 
-        console.log(ipcRenderer);
-
-        ipcRenderer.on('redraw', function(event, arg) {
-
-
-        });
-        // You can also require other files to run in this process
         require('./renderer.js')
     </script>
   </body>
