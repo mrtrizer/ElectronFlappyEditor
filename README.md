@@ -1,7 +1,7 @@
 Experiment with using of Electron as a platform for development of an eiditor
 for game engine.
 
-#Files
+# Files
 + addon.cc - node addon
 + binding.gyp - build configuration
 + main.js - core process
@@ -9,7 +9,7 @@ for game engine.
 + renderer - Flappy project statically linked to addon. It creates SDL window.
 + test_project - FlappyEngine project, dynamically linked to addon.cc. It represents edited project.
 
-#Build
+# Build
 1. clone electron repository and run (I used v1.7.9)
 ```
 ./scripts/bootstrap.py
